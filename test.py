@@ -12,7 +12,7 @@ df.set_index("hour_beginning", inplace=True)
 
 a = df.select_dtypes(include = "number")
 
-Type = st.radio('Type:', ['Hourly', 'Daily', 'Weekly'])
+Type = st.sidebar.radio('Type:', ['Hourly', 'Daily', 'Weekly'])
 
 if Type == 'Hourly':
     result = a
@@ -44,3 +44,10 @@ col1, col2 = st.columns(2)
 
 col1.metric("Total Pedestrians", f"{total_pedestrians:,.0f}")
 col2.metric("Average Pedestrians", f"{average_pedestrians:,.2f}")
+
+fig1, ax = plt.subplots()
+ax.plot(df.index, df['to_manhattan'], label = 'To Manhattan', color = 'red')
+ax.plot(df.index, df['to_brooklyn'], label = 'To Brooklyn', color = 'blue')
+ax.legend()
+
+st.pyplot(fig1)
